@@ -1,5 +1,17 @@
 achievibit changelog
 
+# [1.1.0](https://github.com/kibibit/gitflow-hotfix/compare/v1.0.0...v1.1.0) (2022-05-29)
+
+
+### Bug Fixes
+
+* **app:** make sure pr is closed before opening a new one ([faec902](https://github.com/kibibit/gitflow-hotfix/commit/faec9026d7e67997fefa6a1f78f14e984b8f31a8))
+
+
+### Features
+
+* **merge:** remove test that pr already exists ([ea31fca](https://github.com/kibibit/gitflow-hotfix/commit/ea31fca074b92416d7c709d33d9b7650d6ed677a))
+
 # 1.0.0 (2021-11-26)
 
 
