@@ -1,5 +1,12 @@
 achievibit changelog
 
+# [1.2.0](https://github.com/kibibit/gitflow-hotfix/compare/v1.1.0...v1.2.0) (2022-05-30)
+
+
+### Features
+
+* **github:** wait for pr checks to complete ([9a8fe19](https://github.com/kibibit/gitflow-hotfix/commit/9a8fe1942eb1f7fcaf94166ed123128bd4631ac1))
+
 # [1.1.0](https://github.com/kibibit/gitflow-hotfix/compare/v1.0.0...v1.1.0) (2022-05-29)
 
 
