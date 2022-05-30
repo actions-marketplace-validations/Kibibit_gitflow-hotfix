@@ -27,6 +27,8 @@ var StatusMessage;
     StatusMessage["PR_CREATED"] = "PR created";
     StatusMessage["ALREADY_EXISTS"] = "PR already exists";
     StatusMessage["ERROR"] = "Something went wrong";
+    StatusMessage["WAIT_FOR_PR_CHECKS"] = "Waiting for PR status checks to complete";
+    StatusMessage["PR_CHECKS_COMPLETED"] = "All PR checks are completed";
 })(StatusMessage = exports.StatusMessage || (exports.StatusMessage = {}));
 class GithubCommunicator {
     constructor(options) {
@@ -125,6 +127,31 @@ class GithubCommunicator {
                     currentStatus: StatusMessage.PR_CREATED,
                     state: 'success'
                 }, pullRequest);
+                (0, core_1.info)('Waiting for PR checks to complete before merging');
+                yield this.setStatus({
+                    label: this.statusCheckName,
+                    currentStatus: StatusMessage.WAIT_FOR_PR_CHECKS,
+                    state: 'pending'
+                }, pullRequest);
+                let prChecks;
+                let prChecksCompleted;
+                while (true) {
+                    // eslint-disable-next-line no-await-in-loop
+                    prChecks = yield this.getPRChecks(pullRequest.head.sha);
+                    prChecksCompleted = prChecks.data
+                        .check_runs.every((prCheck) => prCheck.status === 'completed');
+                    if (prChecksCompleted) {
+                        break;
+                    }
+                    // eslint-disable-next-line no-await-in-loop
+                    yield this.wait(60 * 1000);
+                }
+                (0, core_1.info)('All PR checks are completed');
+                yield this.setStatus({
+                    label: this.statusCheckName,
+                    currentStatus: StatusMessage.PR_CHECKS_COMPLETED,
+                    state: 'success'
+                }, pullRequest);
                 (0, core_1.info)(`Merging PR number: ${createdPR.number}`);
                 yield this.mergePR(createdPR.number);
                 // } else {
@@ -143,6 +170,23 @@ class GithubCommunicator {
                     state: 'error'
                 }, pullRequest);
                 throw error;
+            }
+        });
+    }
+    getPRChecks(ref) {
+        return __awaiter(this, void 0, void 0, function* () {
+            // ref can be a SHA, branch name, or a tag name.
+            try {
+                const prChecks = yield this.octokit.rest.checks.listForRef({
+                    owner: this.context.repo.owner,
+                    repo: this.context.repo.repo,
+                    ref: ref
+                });
+                return prChecks;
+            }
+            catch (error) {
+                const errorMessage = (error instanceof Error ? error.message : error);
+                throw new Error(`error while getting PR checks: ${errorMessage}`);
             }
         });
     }
@@ -186,6 +230,13 @@ class GithubCommunicator {
                 const errorMessage = (error instanceof Error ? error.message : error);
                 throw new Error(`error while setting context status: ${errorMessage}`);
             }
+        });
+    }
+    wait(ms) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield new Promise((resolve) => {
+                setTimeout(() => resolve(true), ms);
+            });
         });
     }
 }
