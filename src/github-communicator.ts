@@ -163,7 +163,7 @@ export class GithubCommunicator {
         // eslint-disable-next-line no-await-in-loop
         prChecks = await this.getPRChecks(pullRequest.head.sha);
         prChecksCompleted = prChecks.data
-          .check_runs.every((prCheck) => prCheck.status === 'completed');
+          .check_runs.every((prCheck) => prCheck.status === 'completed' || (prCheck.name === this.context.workflow && prCheck.status === 'in_progress'));
         if (prChecksCompleted) {
           break;
         }
