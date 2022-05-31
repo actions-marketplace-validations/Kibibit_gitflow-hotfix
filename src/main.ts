@@ -11,6 +11,7 @@ async function run(): Promise<void> {
     const githubToken = getInput('token');
     const hotfixAgainstBranch = getInput('hotfixAgainstBranch');
     const openPrAgainstBranch = getInput('openPrAgainstBranch');
+    const jobName = getInput('jobName');
     const labelsInputString = getInput('labels') || '';
     const sharedLabelsInputString = getInput('sharedLabels') || '';
     const checkBranchPrefix = getInput('checkBranchPrefix') || 'hotfix/';
@@ -30,6 +31,7 @@ async function run(): Promise<void> {
       githubToken,
       hotfixAgainstBranch,
       openPrAgainstBranch,
+      jobName,
       titlePrefix,
       labels,
       sharedLabels,
