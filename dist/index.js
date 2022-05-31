@@ -139,7 +139,7 @@ class GithubCommunicator {
                     // eslint-disable-next-line no-await-in-loop
                     prChecks = yield this.getPRChecks(pullRequest.head.sha);
                     prChecksCompleted = prChecks.data
-                        .check_runs.every((prCheck) => prCheck.status === 'completed' || (prCheck.name === this.context.workflow && prCheck.status === 'in_progress'));
+                        .check_runs.every((prCheck) => prCheck.status === 'completed' || (prCheck.name === this.options.jobName && prCheck.status === 'in_progress'));
                     if (prChecksCompleted) {
                         break;
                     }
@@ -271,6 +271,7 @@ function run() {
             const githubToken = (0, core_1.getInput)('token');
             const hotfixAgainstBranch = (0, core_1.getInput)('hotfixAgainstBranch');
             const openPrAgainstBranch = (0, core_1.getInput)('openPrAgainstBranch');
+            const jobName = (0, core_1.getInput)('jobName');
             const labelsInputString = (0, core_1.getInput)('labels') || '';
             const sharedLabelsInputString = (0, core_1.getInput)('sharedLabels') || '';
             const checkBranchPrefix = (0, core_1.getInput)('checkBranchPrefix') || 'hotfix/';
@@ -285,6 +286,7 @@ function run() {
                 githubToken,
                 hotfixAgainstBranch,
                 openPrAgainstBranch,
+                jobName,
                 titlePrefix,
                 labels,
                 sharedLabels,
