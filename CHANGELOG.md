@@ -1,5 +1,12 @@
 achievibit changelog
 
+# [1.0.0-beta.7](https://github.com/kibibit/gitflow-hotfix/compare/v1.0.0-beta.6...v1.0.0-beta.7) (2022-06-01)
+
+
+### Bug Fixes
+
+* **github:** fix wait for pr checks to complete ([0e53ea4](https://github.com/kibibit/gitflow-hotfix/commit/0e53ea4dffe96cfb0990e36f23d2a851ed22e3a8))
+
 # [1.0.0-beta.6](https://github.com/kibibit/gitflow-hotfix/compare/v1.0.0-beta.5...v1.0.0-beta.6) (2022-05-31)
 
 
