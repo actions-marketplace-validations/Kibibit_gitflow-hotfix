@@ -40,6 +40,7 @@ jobs:
           token: ${{ secrets.BOT_TOKEN }}
           hotfixAgainstBranch: main
           openPrAgainstBranch: beta
+          jobName: git-flow-finish-hotfix
 ```
 ## Contributors ✨
 
