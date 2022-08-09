@@ -132,6 +132,13 @@ export class GithubCommunicator {
         issue_number: createdPR.number,
         assignees: existingPR.user?.login ? [ existingPR.user.login ] : []
       });
+      await this.octokit.rest.pulls.createReview({
+        owner: this.context.repo.owner,
+        repo: this.context.repo.repo,
+        pull_number: createdPR.number,
+        event: 'APPROVE',
+        body: 'Auto approved by [gitflow-hotfix](https://github.com/marketplace/actions/kibibit-gitflow-hotfix)'
+      });
       await this.octokit.rest.issues.addLabels({
         owner: this.context.repo.owner,
         issue_number: createdPR.number,
