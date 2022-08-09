@@ -1,5 +1,12 @@
 achievibit changelog
 
+# [1.0.0-beta.8](https://github.com/kibibit/gitflow-hotfix/compare/v1.0.0-beta.7...v1.0.0-beta.8) (2022-08-09)
+
+
+### Features
+
+* **pr:** add review approval for created PR ([1d8d16a](https://github.com/kibibit/gitflow-hotfix/commit/1d8d16aee7162f76bdab5f6412a260404d5e2136))
+
 # [1.0.0-beta.7](https://github.com/kibibit/gitflow-hotfix/compare/v1.0.0-beta.6...v1.0.0-beta.7) (2022-06-01)
 
 
