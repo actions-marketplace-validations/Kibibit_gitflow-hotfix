@@ -17,6 +17,7 @@ export interface IGithubInput {
   githubToken: string;
   hotfixAgainstBranch: string;
   openPrAgainstBranch: string;
+  jobName: string;
   titlePrefix: string;
   labels: string[];
   sharedLabels: string[];
@@ -131,6 +132,13 @@ export class GithubCommunicator {
         issue_number: createdPR.number,
         assignees: existingPR.user?.login ? [ existingPR.user.login ] : []
       });
+      await this.octokit.rest.pulls.createReview({
+        owner: this.context.repo.owner,
+        repo: this.context.repo.repo,
+        pull_number: createdPR.number,
+        event: 'APPROVE',
+        body: 'Auto approved by [gitflow-hotfix](https://github.com/marketplace/actions/kibibit-gitflow-hotfix)'
+      });
       await this.octokit.rest.issues.addLabels({
         owner: this.context.repo.owner,
         issue_number: createdPR.number,
@@ -163,7 +171,7 @@ export class GithubCommunicator {
         // eslint-disable-next-line no-await-in-loop
         prChecks = await this.getPRChecks(pullRequest.head.sha);
         prChecksCompleted = prChecks.data
-          .check_runs.every((prCheck) => prCheck.status === 'completed' || (prCheck.name === this.context.workflow && prCheck.status === 'in_progress'));
+          .check_runs.every((prCheck) => prCheck.status === 'completed' || (prCheck.name === this.options.jobName && prCheck.status === 'in_progress'));
         if (prChecksCompleted) {
           break;
         }

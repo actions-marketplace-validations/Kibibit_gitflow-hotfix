@@ -109,6 +109,13 @@ class GithubCommunicator {
                     issue_number: createdPR.number,
                     assignees: ((_a = existingPR.user) === null || _a === void 0 ? void 0 : _a.login) ? [existingPR.user.login] : []
                 });
+                yield this.octokit.rest.pulls.createReview({
+                    owner: this.context.repo.owner,
+                    repo: this.context.repo.repo,
+                    pull_number: createdPR.number,
+                    event: 'APPROVE',
+                    body: 'Auto approved by [gitflow-hotfix](https://github.com/marketplace/actions/kibibit-gitflow-hotfix)'
+                });
                 yield this.octokit.rest.issues.addLabels({
                     owner: this.context.repo.owner,
                     issue_number: createdPR.number,
@@ -139,7 +146,7 @@ class GithubCommunicator {
                     // eslint-disable-next-line no-await-in-loop
                     prChecks = yield this.getPRChecks(pullRequest.head.sha);
                     prChecksCompleted = prChecks.data
-                        .check_runs.every((prCheck) => prCheck.status === 'completed' || (prCheck.name === this.context.workflow && prCheck.status === 'in_progress'));
+                        .check_runs.every((prCheck) => prCheck.status === 'completed' || (prCheck.name === this.options.jobName && prCheck.status === 'in_progress'));
                     if (prChecksCompleted) {
                         break;
                     }
@@ -271,6 +278,7 @@ function run() {
             const githubToken = (0, core_1.getInput)('token');
             const hotfixAgainstBranch = (0, core_1.getInput)('hotfixAgainstBranch');
             const openPrAgainstBranch = (0, core_1.getInput)('openPrAgainstBranch');
+            const jobName = (0, core_1.getInput)('jobName');
             const labelsInputString = (0, core_1.getInput)('labels') || '';
             const sharedLabelsInputString = (0, core_1.getInput)('sharedLabels') || '';
             const checkBranchPrefix = (0, core_1.getInput)('checkBranchPrefix') || 'hotfix/';
@@ -285,6 +293,7 @@ function run() {
                 githubToken,
                 hotfixAgainstBranch,
                 openPrAgainstBranch,
+                jobName,
                 titlePrefix,
                 labels,
                 sharedLabels,

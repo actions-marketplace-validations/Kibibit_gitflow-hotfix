@@ -1,5 +1,26 @@
 achievibit changelog
 
+# [1.0.0-beta.8](https://github.com/kibibit/gitflow-hotfix/compare/v1.0.0-beta.7...v1.0.0-beta.8) (2022-08-09)
+
+
+### Features
+
+* **pr:** add review approval for created PR ([1d8d16a](https://github.com/kibibit/gitflow-hotfix/commit/1d8d16aee7162f76bdab5f6412a260404d5e2136))
+
+# [1.0.0-beta.7](https://github.com/kibibit/gitflow-hotfix/compare/v1.0.0-beta.6...v1.0.0-beta.7) (2022-06-01)
+
+
+### Bug Fixes
+
+* **github:** fix wait for pr checks to complete ([0e53ea4](https://github.com/kibibit/gitflow-hotfix/commit/0e53ea4dffe96cfb0990e36f23d2a851ed22e3a8))
+
+# [1.0.0-beta.6](https://github.com/kibibit/gitflow-hotfix/compare/v1.0.0-beta.5...v1.0.0-beta.6) (2022-05-31)
+
+
+### Bug Fixes
+
+* **github:** fix wait for pr checks to complete ([a0dafe1](https://github.com/kibibit/gitflow-hotfix/commit/a0dafe13ebefe0f22029b99ed2501d89f3896b85))
+
 ## [1.2.1](https://github.com/kibibit/gitflow-hotfix/compare/v1.2.0...v1.2.1) (2022-05-31)
 
 
